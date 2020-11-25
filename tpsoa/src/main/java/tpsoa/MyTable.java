@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 
 
@@ -86,5 +87,27 @@ public class MyTable {
             }
 			return output.toString();
 	}
+	
+	
+	@Path("/myresource")
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    public String getMyResource() {
+    	String resultat="";
+    	
+    	String responseEntity = ClientBuilder.newClient()
+                .target("https://gentle-fortress-69638.herokuapp.com").path("/myresource")
+                            .request().get(String.class);
+    	resultat = responseEntity;
+    	
+    	String responseEntity2 = ClientBuilder.newClient()
+                .target("https://blooming-beyond-67217.herokuapp.com/image/dragonfly?fbclid=IwAR1NKAJYu9hmmvZpd5ONPbtpSiP9iRoLOr8jjse2jr3h6lzSr9CYBLwHkQw").path("image/dragonfly").request().get(String.class);
+    	
+    	resultat+=responseEntity2;
+        return "<div>"+resultat+"</div>";
+    }
+	
+	
+	
 }
 
